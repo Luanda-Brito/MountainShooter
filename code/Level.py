@@ -1,27 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import pygame
+
+from code.Entity import Entity
 from code.EntityFactory import EntityFactory
 
 
 class Level:
-    def __init__(self, window: pygame.Surface, name: str):
+    def __init__(self, window, name, game_mode):
         self.window = window
         self.name = name
-        self.entity_list = []
-        self.factory = EntityFactory()
+        self.game_mode = game_mode
+        self.entity_list: list[Entity] = []
+        self.entity_list.extend(EntityFactory.get_entity('Level1Bg'))
 
-    def run(self):
-        # Exemplo de loop do nível
-        running = True
-        while running:
-            self.window.fill((0, 0, 0))  # fundo preto
-            for entity in self.entity_list:
-                self.window.blit(entity.surf, entity.rect)
-
-            pygame.display.flip()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
+    def run(self, ):
+        while True:
+            for ent in self.entity_list:
+                self.window.blit(source=ent.surf, dest=ent.rect)
+                ent.move()
+                pygame.display.flip()

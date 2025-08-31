@@ -1,18 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from code.Player import Player
-from code.Enemy import Enemy
 from code.Background import Background
+from code.Const import WIN_WIDTH
 
 
 class EntityFactory:
-    def get_entity(self, entity_type: str):
-        if entity_type == "player":
-            return Player("Player", None, None)
-        elif entity_type == "enemy":
-            return Enemy("Enemy", None, None)
-        elif entity_type == "background":
-            return Background("Background", None, None)
-        else:
-            raise ValueError(f"Unknown entity type: {entity_type}")
+    @staticmethod
+    def get_entity(entity_name: str, position=(0, 0)):
+        match entity_name:
+            case 'Level1Bg':
+                list_bg = []
+                for i in range(7):
+                    list_bg.append(Background(name=f'Level1Bg{i}', position=(0, 0)))
+                    list_bg.append(Background(name=f'Level1Bg{i}', position=(WIN_WIDTH, 0)))
+                return list_bg
+
